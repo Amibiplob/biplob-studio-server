@@ -21,6 +21,12 @@ async function run() {
     const database = client.db("Biplob-studio");
     const servicesCollection = database.collection("services");
 
+    app.get("/", async (req, res) => {
+      const query = {};
+      const cursor = servicesCollection.find(query).limit(3);
+      const services = await cursor.toArray();
+      res.send(services);
+    });
     app.get("/services", async (req, res) => {
       const query = {};
       const cursor = servicesCollection.find(query);
@@ -30,8 +36,8 @@ async function run() {
 
     app.get("/services/:id", async (req, res) => {
       const id = req.params.id;
-      const query = { id: id };
-      const services = servicesCollection.findOne(query);
+      const query = {id:id};
+      const services = await servicesCollection.findOne(query);
       res.send(services);
     });
   } finally {
