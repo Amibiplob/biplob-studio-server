@@ -21,6 +21,7 @@ async function run() {
     const database = client.db("Biplob-studio");
     const servicesCollection = database.collection("services");
     const reviewCollection = database.collection("review");
+    const subscribeCollection = database.collection("subscribe");
 
     app.get("/", async (req, res) => {
       const query = {};
@@ -77,6 +78,12 @@ async function run() {
 
 
 
+
+    app.post("/subscribe", async (req, res) => {
+      const subscribe = req.body;
+      const result = await subscribeCollection.insertOne(subscribe);
+      res.send(result);
+    });
 
 
 
