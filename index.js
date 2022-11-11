@@ -20,6 +20,7 @@ async function run() {
   try {
     const database = client.db("Biplob-studio");
     const servicesCollection = database.collection("services");
+    const reviewCollection = database.collection("review");
 
     app.get("/", async (req, res) => {
       const query = {};
@@ -40,6 +41,20 @@ async function run() {
       const services = await servicesCollection.findOne(query);
       res.send(services);
     });
+
+app.post('/review', async(req,res)=>{
+  const review= req.body;
+  const result = await reviewCollection.insertOne(review);
+  res.send(result);
+})
+
+
+
+
+
+
+
+
   } finally {
   }
 }
